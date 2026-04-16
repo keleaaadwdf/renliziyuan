@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 移动端适配：viewport 设置 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图片展示</title>
+
+  <style>
+    /* ===== 全局重置 ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ===== 页面整体：白色背景、全屏高度 ===== */
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      overflow: hidden; /* 禁止出现滚动条 */
+    }
+
+    /* ===== 容器：弹性布局居中 ===== */
+    .container {
+      display: flex;
+      justify-content: center; /* 水平居中 */
+      align-items: center;     /* 垂直居中 */
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* ===== 图片：自适应、不拉伸、不超出视口 ===== */
+    .full-image {
+      max-width: 100%;    /* 不超出容器宽度 */
+      max-height: 100%;   /* 不超出容器高度 */
+      object-fit: contain; /* 保持比例，完整显示，不裁剪 */
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 主容器：全屏居中 -->
+  <div class="container">
+    <!--
+      图片占位使用 picsum.photos 示例图
+      替换时：将 src 改为你自己的图片路径或 URL 即可
+      alt 属性建议填写图片描述（无障碍访问）
+    -->
+    <img
+      class="full-image"
+      src="https://picsum.photos/1200/800"
+      alt="展示图片"
+    />
+  </div>
+
+  <!-- ===== 少量 JS：图片加载失败时的降级处理 ===== -->
+  <script>
+    const img = document.querySelector('.full-image');
+
+    // 图片加载失败时显示友好提示
+    img.addEventListener('error', function () {
+      img.style.display = 'none';
+
+      const tip = document.createElement('p');
+      tip.textContent = '图片加载失败，请检查图片地址';
+      tip.style.cssText = 'color:#999;font-size:16px;font-family:sans-serif;';
+      document.querySelector('.container').appendChild(tip);
+    });
+  </script>
+
+</body>
+</html>
